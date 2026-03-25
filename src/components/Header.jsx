@@ -60,10 +60,12 @@ export const Header = () => {
             </NavLink>
           )}
           {user?.role === "admin" && (
-            <NavLink to="/admin" active={isActive("/admin")}>
-              <Settings size={16} />{" "}
-              <span className="hidden sm:inline">Админ</span>
-            </NavLink>
+            <Link
+              to="/admin"
+              className="text-red-500 font-bold hover:text-red-400 transition-colors"
+            >
+              👑 Админка
+            </Link>
           )}
         </nav>
 

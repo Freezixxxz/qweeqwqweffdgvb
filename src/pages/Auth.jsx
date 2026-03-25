@@ -13,11 +13,18 @@ export const Auth = () => {
     password: "",
     password2: "",
   });
+
   const { login, register } = useAuth();
   const navigate = useNavigate();
 
+  const handleToggleMode = () => {
+    setIsLogin(!isLogin);
+    setForm({ name: "", email: "", password: "", password2: "" }); // Очистка при смене
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Отправляем на сервер:", form);
     setLoading(true);
 
     try {
@@ -25,15 +32,15 @@ export const Auth = () => {
         await login(form.email, form.password);
       } else {
         if (form.password !== form.password2) {
-          alert("Пароли не совпадают");
+          alert("Пароли не совпадают!");
           setLoading(false);
           return;
         }
         await register(form.name, form.email, form.password);
       }
-      navigate("/");
+      navigate("/profile"); // Лучше отправлять сразу в профиль после входа
     } catch (e) {
-      alert(e.response?.data?.error || "Ошибка");
+      alert(e.response?.data?.error || "Ошибка соединения");
     } finally {
       setLoading(false);
     }
@@ -41,7 +48,7 @@ export const Auth = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10">
-      <div className="card p-6">
+      <div className="card p-6 bg-bg2 border border-brd rounded-xl">
         <h1 className="text-2xl font-bold text-center mb-6">
           {isLogin ? "👋 Вход" : "📝 Регистрация"}
         </h1>
@@ -88,15 +95,15 @@ export const Auth = () => {
             className="w-full"
             disabled={loading}
           >
-            {loading ? "Загрузка..." : isLogin ? "Войти" : "Создать аккаунт"}
+            {loading ? "Подождите..." : isLogin ? "Войти" : "Создать аккаунт"}
           </Button>
         </form>
 
         <div className="mt-4 text-center text-sm text-text-secondary">
           {isLogin ? "Нет аккаунта?" : "Уже есть аккаунт?"}{" "}
           <button
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-accent hover:underline"
+            onClick={handleToggleMode}
+            className="text-accent hover:underline font-medium"
           >
             {isLogin ? "Зарегистрироваться" : "Войти"}
           </button>

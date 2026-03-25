@@ -6,6 +6,8 @@ import { Catalog } from "./pages/Catalog";
 import { ListingDetail } from "./pages/ListingDetail";
 import { Auth } from "./pages/Auth";
 import { Profile } from "./pages/Profile";
+import { Sell } from "./pages/Sell";
+import { Admin } from "./pages/Admin";
 
 function App() {
   return (
@@ -19,9 +21,9 @@ function App() {
               <Route path="/catalog" element={<Catalog />} />
               <Route path="/listing/:id" element={<ListingDetail />} />
               <Route path="/auth" element={<Auth />} />
-              <Route path="/auth" element={<Auth />} />
               <Route path="/profile" element={<Profile />} />
-              {/* Добавь остальные роуты */}
+              <Route path="/sell" element={<Sell />} />
+              <Route path="/admin" element={<Admin />} />
             </Routes>
           </main>
         </div>

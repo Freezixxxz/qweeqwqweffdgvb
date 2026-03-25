@@ -1,81 +1,76 @@
 import { Link } from "react-router-dom";
-import { Shield, MessageSquare, Snowflake, Headphones } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { Button } from "../components/ui/Button";
 
 export const Home = () => {
+  const { user } = useAuth();
+
   return (
-    <div className="space-y-12">
-      <section className="relative text-center py-16">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-float pointer-events-none" />
-
-        <h1 className="text-4xl md:text-5xl font-black mb-4 relative z-10">
-          Купи аккаунт
-          <br />
-          <span className="bg-gradient-to-r from-accent to-emerald-400 bg-clip-text text-transparent">
-            быстро и безопасно
-          </span>
-        </h1>
-        <p className="text-text-secondary max-w-md mx-auto mb-8">
-          Маркетплейс аккаунтов World of Tanks и WoT Blitz
-        </p>
-        <div className="flex justify-center gap-3">
-          <Link to="/catalog" className="btn-primary text-lg px-8 py-3">
-            🛍 Каталог
-          </Link>
-          <Link to="/sell" className="btn-secondary text-lg px-8 py-3">
-            💰 Продать
-          </Link>
+    <div className="max-w-7xl mx-auto space-y-20 py-10">
+      {/* Главный блок (Hero) */}
+      <section className="relative bg-bg2 border border-brd rounded-3xl p-10 md:p-20 text-center overflow-hidden shadow-2xl">
+        <div className="relative z-10 space-y-6">
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+            Безопасный рынок аккаунтов <br />{" "}
+            <span className="text-accent">World of Tanks</span>
+          </h1>
+          <p className="text-text-secondary text-lg md:text-xl max-w-2xl mx-auto">
+            Покупай и продавай аккаунты без риска. Деньги замораживаются
+            гарантом до полной проверки и передачи данных.
+          </p>
+          <div className="flex justify-center flex-wrap gap-4 pt-4">
+            <Link to="/catalog">
+              <Button variant="primary" className="text-lg px-8 py-4">
+                🛒 Перейти в каталог
+              </Button>
+            </Link>
+            <Link to={user ? "/sell" : "/auth"}>
+              <Button variant="secondary" className="text-lg px-8 py-4">
+                💰 Продать аккаунт
+              </Button>
+            </Link>
+          </div>
         </div>
 
-        <div className="flex justify-center gap-10 mt-12 flex-wrap">
-          <Stat value="500+" label="Аккаунтов" />
-          <Stat value="12к+" label="Пользователей" />
+        {/* Декоративные свечения на фоне */}
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-accent/20 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
+      </section>
+
+      {/* Блок преимуществ */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="card p-8 bg-bg2 border border-brd rounded-2xl text-center hover:border-accent transition-colors duration-300">
+          <div className="text-5xl mb-4">🛡️</div>
+          <h3 className="text-xl font-bold mb-2">Безопасная сделка</h3>
+          <p className="text-text-secondary">
+            Мы удерживаем средства покупателя до тех пор, пока он не подтвердит
+            получение аккаунта.
+          </p>
+        </div>
+
+        <div className="card p-8 bg-bg2 border border-brd rounded-2xl text-center hover:border-accent transition-colors duration-300">
+          <div className="text-5xl mb-4">⚡</div>
+          <h3 className="text-xl font-bold mb-2">Быстрая передача</h3>
+          <p className="text-text-secondary">
+            Специальный защищенный чат между продавцом и покупателем появляется
+            сразу после оплаты.
+          </p>
+        </div>
+
+        <div className="card p-8 bg-bg2 border border-brd rounded-2xl text-center hover:border-accent transition-colors duration-300">
+          <div className="text-5xl mb-4">💎</div>
+          <h3 className="text-xl font-bold mb-2">Низкая комиссия</h3>
+          <p className="text-text-secondary">
+            Всего 10% комиссии с успешных продаж. Публикация базовых объявлений
+            — абсолютно бесплатно.
+          </p>
         </div>
       </section>
 
-      <section className="max-w-5xl mx-auto">
-        <h2 className="text-2xl font-bold text-center mb-8">
-          🛡 Почему LeShop?
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Feature
-            icon={<Shield size={28} />}
-            title="Гарант"
-            desc="Деньги после подтверждения"
-          />
-          <Feature
-            icon={<MessageSquare size={28} />}
-            title="Чат"
-            desc="Безопасная передача данных"
-          />
-          <Feature
-            icon={<Snowflake size={28} />}
-            title="Защита"
-            desc="Замороженный баланс"
-          />
-          <Feature
-            icon={<Headphones size={28} />}
-            title="Поддержка"
-            desc="Решение споров 24/7"
-          />
-        </div>
-      </section>
+      {/* Футер для вида */}
+      <footer className="border-t border-brd pt-8 pb-4 text-center text-sm text-text-secondary">
+        <p>© 2026 LeShop. Все права защищены.</p>
+      </footer>
     </div>
   );
 };
-
-const Stat = ({ value, label }) => (
-  <div className="text-center">
-    <div className="text-2xl font-black bg-gradient-to-r from-accent to-purple-400 bg-clip-text text-transparent">
-      {value}
-    </div>
-    <div className="text-xs text-text-muted">{label}</div>
-  </div>
-);
-
-const Feature = ({ icon, title, desc }) => (
-  <div className="card p-5 text-center hover:-translate-y-1 hover:border-accent transition-all">
-    <div className="text-accent mb-2 flex justify-center">{icon}</div>
-    <h3 className="font-bold text-sm mb-1">{title}</h3>
-    <p className="text-xs text-text-muted">{desc}</p>
-  </div>
-);

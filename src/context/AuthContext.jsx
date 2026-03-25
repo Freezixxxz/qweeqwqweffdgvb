@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
           setUser(data);
         } catch (e) {
           localStorage.removeItem("token");
+          setUser(null);
         }
       }
       setLoading(false);
@@ -54,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{ user, login, register, logout, updateUser, loading }}
     >
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
